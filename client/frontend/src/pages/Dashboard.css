@@ -1,0 +1,20 @@
+.dashboard-card {
+    transition: all 0.3s ease-in-out;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+}
+
+.dashboard-header {
+    background-color: var(--primary-color);
+    color: white;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.welcome-title {
+    color: var(--text-color);
+    font-weight: 600;
+}

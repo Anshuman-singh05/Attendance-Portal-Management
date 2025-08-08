@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover-color: #4338ca;
+  --background-color: #f9fafb;
+  --card-background-color: #ffffff;
+  --text-color: #1f2937;
+  --text-secondary-color: #6b7280;
+  --box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.card {
+  box-shadow: var(--box-shadow);
+  border-radius: 0.75rem;
+  border: none;
+}
+
+/* === Responsive Design (Media Queries) === */
+
+/* For Tablets and smaller devices (<= 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+
+  /* Form waale card ki padding kam kar dein */
+  .card.p-5 {
+    padding: 2rem !important;
+  }
+
+  /* Main content area ki padding kam kar dein */
+  main.py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
+
+/* For Mobile phones (<= 576px) */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Chote mobile par form ki padding aur kam kar dein */
+  .card.p-5 {
+    padding: 1.5rem !important;
+  }
+
+  /* Tables ko choti screen par behtar banayein */
+  .table-sm th,
+  .table-sm td {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  /* Dashboard ke buttons ko ek ke neeche ek laayein */
+  .dashboard-buttons .col {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .dashboard-buttons .btn {
+    margin-bottom: 0.5rem;
+  }
+}

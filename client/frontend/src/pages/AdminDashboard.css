@@ -1,0 +1,15 @@
+/* AdminDashboard.css */
+.admin-table {
+  box-shadow: var(--box-shadow);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.admin-table thead {
+  background-color: #dc3545; /* Admin ke liye red theme */
+  color: white;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
