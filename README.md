@@ -1,46 +1,50 @@
-# Full-Stack MERN Attendance Portal with Face Recognition
-## 📌 About The Project
+# Full-Stack Attendance Portal with Geofencing & Face Recognition
 
-This project is a modern solution for **attendance** and **leave management**.  
-Employees can easily **clock in/out**, apply for leave, and view their history.  
-Admins have a **powerful dashboard** to manage all users and their records.
-
-**Dashboard Screenshot:**  
-> _(Add a screenshot here)_
+An enterprise-grade attendance and leave management system built with the MERN stack. This application leverages advanced security features like face recognition and geofencing to automate and secure employee attendance tracking and leave management.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Features
 
-### Employee Features
-- ✅ Secure Register & Login (Email & Password)
-- ✨ Face Recognition Login
-- 🕒 Daily Clock In & Clock Out
-- 📅 View Attendance History
-- ✈️ Apply for Leave & Check Status
-- 👤 View & Update Profile
+### Employee
+- **Secure Authentication:** Register and login with email/password.
+- **Face Recognition Login:** Password-less login using webcam-based face recognition.
+- **Multiple Punch In/Out:** Punch in/out multiple times a day with geofence validation.
+- **Attendance History:** View detailed attendance and leave history.
+- **Leave Application:** Apply for leaves and track their approval status.
+- **Profile Management:** Update profile details, including Date of Birth (with validation) and face data registration.
 
-### Admin Features
-- 👑 Admin Dashboard
-- 👥 View All Users
-- 🗑️ Delete Any User
-- 📊 View All Attendance Records
-- ⏳ Manage Leave Requests (Approve/Reject)
+### Admin
+- **Role-Based Access Control:** Secure admin panel accessible only by admins.
+- **Dashboards:** Centralized view of all employee attendance and leave requests.
+- **User Management:** Edit user details (DOB, roles), and delete users.
+- **Leave Management:** Approve or reject leave requests.
+- **Geofence Management:** Create and manage office locations (geofences) with names, coordinates, and radii; assign geofences to users; set default geofence policies.
+
+---
+
+## 🔐 Security & Auditing
+- JWT authentication with HTTP-only cookies for secure sessions.
+- Geofencing validation to restrict punch-in/out and face login to assigned locations.
+- Logs IP address, location, and device details on every successful face login for auditing.
 
 ---
 
 ## 🛠 Tech Stack
+- **Frontend:** React.js, React Bootstrap, Zustand, face-api.js, react-toastify, Axios
+- **Backend:** Node.js, Express.js, bcrypt.js, JWT Authentication
+- **Database:** MongoDB, Mongoose
+- **Routing:** React Router
 
-| Frontend          | Backend           | Database |
-| ----------------- | ----------------- | -------- |
-| React.js          | Node.js           | MongoDB  |
-| React Bootstrap   | Express.js        | Mongoose |
-| React Router      | JWT Auth          |          |
-| Zustand           | bcrypt.js         |          |
-| Axios             |                   |          |
-| face-api.js       |                   |          |
-| react-toastify    |                   |          |
+---
 
-## 👨‍💻 Developed By
+## 💻 Getting Started
 
-**Anshuman Singh**  
+### Prerequisites
+- Node.js (v14+ recommended)
+- MongoDB database
+
+
+👨‍💻 Developed By-
+Anshuman Singh
+
