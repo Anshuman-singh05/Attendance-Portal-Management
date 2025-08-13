@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Button, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Card, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import useAuthStore from '../store/authStore.js';
 import axios from '../api.js';
 import './Dashboard.css';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const { userInfo } = useAuthStore();
   const [attendanceStatus, setAttendanceStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const getTodaysStatus = async () => {
     try {
@@ -26,29 +29,22 @@ const HomePage = () => {
     getTodaysStatus();
   }, []);
 
-  const clockInHandler = async () => {
-    setError('');
-    try {
-      await axios.post('/api/attendance/clockin');
-      getTodaysStatus();
-    } catch (err) {
-      setError(err?.response?.data?.message || 'An error occurred');
-    }
+  // Punch In ab face se hoga
+  const punchInHandler = () => {
+    navigate('/punch-in'); // Naye Face Punch In page par bhej do
   };
-
-  const clockOutHandler = async () => {
-    setError('');
-    try {
-      await axios.post('/api/attendance/clockout');
-      getTodaysStatus();
-    } catch (err) {
-      setError(err?.response?.data?.message || 'An error occurred');
-    }
+  
+  // Punch out ab face se hoga
+  const punchOutHandler = () => {
+    navigate('/punch-out'); // Naye Face Punch Out page par bhej do
   };
 
   if (loading) {
-    return <p>Loading attendance status...</p>;
+    return <Container className='mt-5'><Spinner animation="border" /></Container>;
   }
+  
+  const lastPunch = attendanceStatus ? attendanceStatus.punches[attendanceStatus.punches.length - 1] : null;
+  const isPunchedIn = attendanceStatus && lastPunch && !lastPunch.punchOutTime;
 
   return (
     <Card className="dashboard-card">
@@ -61,43 +57,37 @@ const HomePage = () => {
         
         {error && <Alert variant='danger'>{error}</Alert>}
 
-        {attendanceStatus ? (
-          <Alert variant='info'>
-            Clocked In at: {new Date(attendanceStatus.clockInTime).toLocaleTimeString()}
-            <br />
-            {attendanceStatus.clockOutTime && `Clocked Out at: ${new Date(attendanceStatus.clockOutTime).toLocaleTimeString()}`}
-          </Alert>
+        {attendanceStatus && attendanceStatus.punches.length > 0 ? (
+            attendanceStatus.punches.map((punch, index) => (
+                <Alert key={index} variant={punch.punchOutTime ? 'light' : 'info'}>
+                    Punch {index + 1}: In at {new Date(punch.punchInTime).toLocaleTimeString()}
+                    {punch.punchOutTime && ` | Out at ${new Date(punch.punchOutTime).toLocaleTimeString()}`}
+                </Alert>
+            ))
         ) : (
-          <Alert variant='warning'>You have not clocked in yet today.</Alert>
+            <Alert variant='warning'>You have not punched in yet today.</Alert>
         )}
 
         <Row className='dashboard-buttons'>
           <Col>
-            <Button
-              variant="success"
-              onClick={clockInHandler}
-              className="w-100 fw-bold"
-              disabled={!!attendanceStatus}
-            >
-              Clock In
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              variant="danger"
-              onClick={clockOutHandler}
-              className="w-100 fw-bold"
-              disabled={!attendanceStatus || !!attendanceStatus.clockOutTime}
-            >
-              Clock Out
-            </Button>
+            {isPunchedIn ? (
+                // Agar user punched-in hai, toh Punch Out button (jo page par le jaayega) dikhao
+                <Button variant="danger" onClick={punchOutHandler} className="w-100 fw-bold">
+                    Punch Out
+                </Button>
+            ) : (
+                // Agar nahi, toh Punch In button (jo page par le jaayega) dikhao
+                <Button variant="success" onClick={punchInHandler} className="w-100 fw-bold">
+                    Punch In
+                </Button>
+            )}
           </Col>
         </Row>
 
         <Row className="mt-3">
             <Col>
                 <LinkContainer to='/apply-leave'>
-                    <Button variant='info' className='w-100 fw-bold'>Apply for Leave</Button>
+                    <Button variant='secondary' className='w-100 fw-bold'>Apply for Leave</Button>
                 </LinkContainer>
             </Col>
         </Row>

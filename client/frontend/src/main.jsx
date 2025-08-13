@@ -22,6 +22,10 @@ import LeaveListPage from './pages/LeaveListPage.jsx';
 import ApplyLeavePage from './pages/ApplyLeavePage.jsx';
 import MyLeavesPage from './pages/MyLeavesPage.jsx';
 import FaceLoginPage from './pages/FaceLoginPage.jsx';
+import ManageGeofences from './pages/ManageGeofence.jsx';
+import UserEditPage from './pages/UserEditPage.jsx';
+import FacePunchOutPage from './pages/FacePunchOutPage.jsx';
+import FacePunchInPage from './pages/FacePunchInPage.jsx';
 
 
 const router= createBrowserRouter(
@@ -36,11 +40,16 @@ const router= createBrowserRouter(
         <Route path='/history' element={<HistoryPage/>}></Route>
         <Route path='/apply-leave' element={<ApplyLeavePage/>}/>
         <Route path='/myleaves' element={<MyLeavesPage/>}/>
+        <Route path='/punch-out' element={<FacePunchOutPage/>}></Route>
+        <Route path='/punch-in' element={<FacePunchInPage/>}></Route>
       </Route>
       <Route path='' element={<AdminRoute/>}>
         <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
         <Route path='/admin/userlist' element={<UserListPage/>}/>
         <Route path='/admin/leavelist' element={<LeaveListPage/>}/>
+        <Route path='/admin/geofence'element={<ManageGeofences/>}/>
+        <Route path='/adminuserlist' element={<UserListPage/>}/>
+        <Route path='/admin/users/:id/edit' element={<UserEditPage />}/>
       </Route>
     </Route>
   )

@@ -60,6 +60,9 @@ const Header = () => {
                       <LinkContainer to='/admin/leavelist'>
                         <NavDropdown.Item>Leaves</NavDropdown.Item>
                       </LinkContainer>
+                      <LinkContainer to='/admin/geofence'>
+                      <NavDropdown.Item>Geofence</NavDropdown.Item>
+                      </LinkContainer>
                     </NavDropdown>
                   )}
                 </>

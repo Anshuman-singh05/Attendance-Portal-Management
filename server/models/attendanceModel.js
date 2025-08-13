@@ -1,33 +1,37 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const attendanceSchema= mongoose.Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User',
+const punchSchema = new mongoose.Schema({
+  punchInTime: { type: Date, required: true },
+  punchOutTime: { type: Date },
+});
+
+const attendanceSchema = mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
+        },
+        date: {
+            type: Date,
+            required: true,
+        },
+        punches: [punchSchema],
+        status: {
+            type: String,
+            required: true,
+            enum: ['Present', 'On Leave'],
+            default: 'Present',
+        },
+        clockInGeofence: { // <-- Yeh field zaroori hai
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Geofence',
+        },
     },
-    date:{
-        type: Date,
-        required: true,
-    },
-    clockInTime:{
-        type: Date,
-        required: true,
-    },
-    clockOutTime:{
-        type: Date,
-    },
-    status:{
-        type:String,
-        required: true,
-        enum: ['Present', 'On Leave'],
-        default: 'Present',
-    },
-},
-{
-    timestamps: true,
-}
+    {
+        timestamps: true,
+    }
 );
 
-const Attendance= mongoose.model('Attendance', attendanceSchema);
+const Attendance = mongoose.model('Attendance', attendanceSchema);
 export default Attendance;

@@ -3,6 +3,7 @@ import { Table, Container, Alert, Badge } from 'react-bootstrap';
 import axios from '../api.js';
 import { toast } from 'react-toastify';
 import './HistoryPage.css';
+import formatDate from '../utils/formatDate.js';
 
 const MyLeavesPage = () => {
   const [myLeaves, setMyLeaves] = useState([]);
@@ -57,8 +58,8 @@ const MyLeavesPage = () => {
           <tbody>
             {myLeaves.map((leave) => (
               <tr key={leave._id}>
-                <td>{new Date(leave.fromDate).toLocaleDateString()}</td>
-                <td>{new Date(leave.toDate).toLocaleDateString()}</td>
+                <td>{formatDate(leave.fromDate)}</td>
+                <td>{formatDate(leave.toDate)}</td>
                 <td>{leave.reason}</td>
                 <td>{getStatusBadge(leave.status)}</td>
               </tr>

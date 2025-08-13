@@ -21,9 +21,17 @@ const userSchema= mongoose.Schema(
         required: true,
         default:'employee',
     },
+    dob:{
+        type: Date,
+        required: true,
+    },
     faceDescriptor:{
         type:[Number],
     },
+    assignedGeofences:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Geofence',
+    }]
 
 },
 {

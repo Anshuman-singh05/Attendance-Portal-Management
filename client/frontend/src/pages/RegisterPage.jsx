@@ -1,82 +1,96 @@
 import { useState } from "react";
-import{Link, useNavigate} from "react-router-dom";
-import { Form, Button, Row, Col} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer.jsx";
 import axios from "../api.js";
 import useAuthStore from "../store/authStore.js";
 import './RegisterPage.css';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
-const RegisterPage= ()=>{
-    const[name, setName]= useState('');
-    const[email, setEmail]= useState('');
-    const[password,setPassword]= useState('');
-    const[confirmPassword, setConfirmPassword]= useState('');
+const RegisterPage = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [dob, setDob] = useState('');
 
-    const navigate= useNavigate();
-    const {setUserInfo}= useAuthStore();
+    const navigate = useNavigate();
+    const { setUserInfo } = useAuthStore();
 
-    const submitHandler= async(e)=>{
+    const submitHandler = async (e) => {
         e.preventDefault();
-        if(!name || !email || !password){
+        if (!name || !email || !password || !dob) {
             toast.error('Please fill all fields');
             return;
         }
-        if(password!== confirmPassword){
+        if (password !== confirmPassword) {
             toast.error('Passwords do not match');
             return;
         }
-            try{
-                const res= await axios.post('/api/users',{name,email,password});
-                setUserInfo(res.data);
-                navigate('/');
-            }catch(err){
-                toast.error(err?.response?.data?.message || err.error);
-            }
-        
+        try {
+            const res = await axios.post('/api/users', { name, email, password, dob });
+            setUserInfo(res.data);
+            
+            // === YAHAN CHANGE HUA HAI ===
+            toast.success('Account created successfully!');
+            
+            navigate('/');
+        } catch (err) {
+            toast.error(err?.response?.data?.message || 'An error occurred');
+        }
     };
 
-    return(
+    return (
         <FormContainer>
             <h1>Sign Up</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group className="my-2" controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
-                    type="text"
-                    placeholder="Enter name"
-                    value={name}
-                    onChange={(e)=>setName(e.target.value)}
+                        type="text"
+                        placeholder="Enter name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 
                 <Form.Group className="my-2" controlId="email">
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
-                    type="email"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e)=> setEmail(e.target.value)}
+                        type="email"
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    ></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='my-2' controlId='dob'>
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                        type='date'
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        required
                     ></Form.Control>
                 </Form.Group>
 
                 <Form.Group className="my-2" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
+                        type="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 
                 <Form.Group className='my-2' controlId='confirmPassword'>
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
-                    type='password'
-                    placeholder='Confirm password'
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                        type='password'
+                        placeholder='Confirm password'
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 
@@ -87,7 +101,7 @@ const RegisterPage= ()=>{
 
             <Row className="py-3">
                 <Col>
-                Already have an account?<Link to='/login'>Login</Link>
+                    Already have an account? <Link to='/login'>Login</Link>
                 </Col>
             </Row>
         </FormContainer>
